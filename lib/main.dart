@@ -95,10 +95,25 @@ class _MyList extends State<MyList> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (context) => MoviePage(
-                      movie: listOfMoviesByGenre[position],
-                    )),
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) {
+                return MoviePage(movie: listOfMoviesByGenre[position]);
+              },
+              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                const begin = Offset(1.0, 0.0);
+                const end = Offset.zero;
+                const curve = Curves.easeInOut;
+
+                var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+                var offsetAnimation = animation.drive(tween);
+
+                return SlideTransition(
+                  position: offsetAnimation,
+                  child: child,
+                );
+              },
+            ),
           );
         },
         onTapDown: (TapDownDetails details) {
@@ -146,7 +161,7 @@ class _MyList extends State<MyList> {
                 ),
               ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(7.0),
                   child: movie.image,
                 ),
               ),
@@ -159,15 +174,17 @@ class _MyList extends State<MyList> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(movie.title,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                          fontSize: 24.0,
+                          fontSize: 18.0,
                           fontWeight: FontWeight.bold
                         ),
                         textAlign: TextAlign.start,
                     ),
                     Text(movie.actors,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                          fontSize: 16.0,
+                          fontSize: 12.0,
                           fontStyle: FontStyle.italic
                         )
                     )
@@ -211,12 +228,27 @@ class _MyList extends State<MyList> {
     ).then((value) {
       if (value == 0) {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => DetailsPage(
-                  movie: movie,
-                )
-            ));
+          context,
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) {
+              return DetailsPage(movie: movie);
+            },
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              const begin = Offset(-1.0, 0.0);
+              const end = Offset.zero;
+              const curve = Curves.ease;
+
+              var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+              var offsetAnimation = animation.drive(tween);
+
+              return SlideTransition(
+                position: offsetAnimation,
+                child: child,
+              );
+            },
+          ),
+        );
       }
       if (value == 1) {
         _launchBrowser(movie.wikipediaLink);

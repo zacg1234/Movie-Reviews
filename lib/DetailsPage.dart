@@ -10,12 +10,14 @@ class DetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white70,
+      backgroundColor: Colors.grey,
         appBar: AppBar(
           title: Text("${movie.title} Details"),
           backgroundColor: Colors.black54,
         ),
-      body: Center(
+      body: Container(
+      color: Colors.grey,
+      child: Center(
         child: Container(
           margin: const EdgeInsets.fromLTRB(15,90, 15, 190),
           padding: const EdgeInsets.fromLTRB(10,10, 10, 10),
@@ -67,6 +69,7 @@ class DetailsPage extends StatelessWidget {
             ),
           )
         ),
+      ),
     );
   }
 

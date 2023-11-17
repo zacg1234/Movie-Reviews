@@ -15,7 +15,7 @@ class MoviePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white70,
+      backgroundColor: Colors.grey,
       appBar: AppBar(
         title: Text(movie.title),
         backgroundColor: Colors.black54,
@@ -23,6 +23,7 @@ class MoviePage extends StatelessWidget {
 
       body: Container(
         decoration: BoxDecoration(
+            //color: Colors.black,
             borderRadius: BorderRadius.circular(20.0),
             border: Border.all(
               width: 3.0,
@@ -40,7 +41,7 @@ class MoviePage extends StatelessWidget {
             _launchIMDB();
           },
           child: ClipRRect(
-              borderRadius: BorderRadius.circular(20.0), // Set the border radius here
+              borderRadius: BorderRadius.circular(16.0), // Set the border radius here
               child: movie.image
           ),
             ),
